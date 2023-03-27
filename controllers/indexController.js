@@ -1,3 +1,4 @@
+const { parseUrl } = require('mysql2/lib/connection_config');
 const Expense = require('../models/indexModel');
 
 exports.postAddExpense = (req, res, next) => {
@@ -5,7 +6,7 @@ exports.postAddExpense = (req, res, next) => {
     const todoDesc = req.body.todoDesc;
     const candyPrice = req.body.candyPrice;
     const candyQty = req.body.candyQty
-    console.log(todoName, todoDesc,candyPrice,candyQty)
+    console.log(todoName, todoDesc, candyPrice, candyQty)
     Expense.create({
         todoName: todoName,
         todoDesc: todoDesc,
@@ -42,3 +43,35 @@ exports.deleteUser = (req, res, next) => {
         })
 }
 
+exports.updateQty = async (req, res, next) => {
+    const qty = 1
+    const id = req.body.id;
+    try {
+        const user = await Expense.findByPk(id);
+        console.log(user.candyQty)
+        const newqty = parseInt(user.candyQty = user.candyQty - qty);
+        await user.save()
+        console.log(newqty)
+        return res.status(200).json({ message: 'Quantity updated successfully' });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Server error' });
+    }
+};
+
+exports.updateQty2 = async (req, res, next) => {
+    const qty = 2
+    const id = req.body.id;
+    console.log(req.body)
+    try {
+        const user = await Expense.findByPk(id);
+        console.log(user.candyQty)
+        const newqty = parseInt(user.candyQty = user.candyQty - qty);
+        await user.save()
+        console.log(newqty)
+        return res.status(200).json({ message: 'Quantity updated successfully' });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Server error' });
+    }
+};

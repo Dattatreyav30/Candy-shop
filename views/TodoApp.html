@@ -48,7 +48,6 @@
                         <th>Candy Price</th>
                         <th>Candy Qty</th>
                         <th>Buy one</th>
-                        <th>Buy two</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -100,9 +99,7 @@
         const td2 = document.createElement('td');
         row.innerHTML = (`<td>${data.todoName}</td> <td>${data.todoDesc}</td><td>${data.candyPrice}</td> <td>${data.candyQty}</td>`)
         td.appendChild(buyOne(data))
-        td2.appendChild(buyOne2(data.candyQty))
         row.appendChild(td);
-        row.appendChild(td2);
         tbody.appendChild(row);
         form.reset();
         console.log(data);
@@ -112,23 +109,16 @@
         buyOneBtn.type = 'button';
         buyOneBtn.id = 'buyone'
         buyOneBtn.textContent = 'buy one';
-        buyOneBtn.className = 'btn btn-primary'
+        buyOneBtn.className = 'btn btn-primary';
         buyOneBtn.onclick = async () => {
-            //...
+            try {
+                await axios.post('http://localhost:3000/updated-qty', data)
+                location.reload();
+            } catch (err) {
+                console.error(err);
+            }
         }
         return buyOneBtn;
-    }
-
-    const buyOne2 = (tbody, row, id) => {
-        let BuyTwoButton = document.createElement('input');
-        BuyTwoButton.type = 'button';
-        BuyTwoButton.id = 'buyTwo'
-        BuyTwoButton.value = 'buy Two';
-        BuyTwoButton.className = 'btn btn-primary'
-        BuyTwoButton.onclick = async () => {
-            //..
-        }
-        return BuyTwoButton;
     }
 
 </script>

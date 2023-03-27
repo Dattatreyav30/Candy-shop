@@ -13,5 +13,8 @@ router.post('/submit-form',indexController.postAddExpense);
 
 router.delete(`/delete-user/:id`,indexController.deleteUser);
 
+router.post('/updated-qty',indexController.updateQty);
+
+router.post('/updated-qty2',indexController.updateQty2);
 
 module.exports = router;
